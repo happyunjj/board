@@ -20,14 +20,13 @@ public class BoardServiceTest {
 
     @Test
     public void selectAll(){
-        List<Board> boardList = boardService.selectAll();
+        List<Board> boardList = boardService.selectAll(3);
         log.info("boardposts : {}", boardList);
     }
 
     @Test
     public void getBookmark(){
-        Long[] arr = {2L};
-        List<Board> bookmarkList = boardService.getBookmark(arr);
+        List<Board> bookmarkList = boardService.getBookmark(2);
         log.info("boardposts : {}", bookmarkList);
     }
 
@@ -56,9 +55,7 @@ public class BoardServiceTest {
 
     @Test
     public void delete(){
-        Board board = new Board();
-        board.setBno(38L);
-        boardService.delete(board);
+        boardService.delete(38L);
     }
 
 }

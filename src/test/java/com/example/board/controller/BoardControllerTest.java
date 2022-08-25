@@ -17,9 +17,5 @@ public class BoardControllerTest {
     @Autowired
     private BoardController boardController;
 
-    @Test
-    public void getList() {
-        List<Board> boardList = boardController.getList();
-        log.info("boardposts : {}", boardList);
-    }
+
 }

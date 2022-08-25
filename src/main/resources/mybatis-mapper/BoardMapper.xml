@@ -4,15 +4,30 @@
 
 <mapper namespace="com.example.board.repository.BoardMapper">
     <select id="getList" resultType="Board">
-        SELECT BNO,TITLE,CONTENT,TO_CHAR(REGDATE,'yyyy-MM-dd hh24:mi:ss') REGDATE,BOOKMARK
-        FROM TBL_BOARD
-        <if test="bnos != null">
-            WHERE BNO IN
-            <foreach collection="array" item="bookmarks"  open="(" close=")" separator=",">
-                #{bookmarks}
-            </foreach>
-        </if>
+        SELECT A.BNO,TITLE,CONTENT,TO_CHAR(REGDATE,'yyyy-MM-dd hh24:mi:ss') REGDATE,COUNT(B.BNO) BOOKMARK
+        FROM TBL_BOARD A
+        LEFT JOIN TBL_BOOKMARK B
+        ON A.BNO=B.BNO
+        GROUP BY A.BNO
         ORDER BY BNO DESC
+        LIMIT 10 OFFSET (#{pageNum} - 1) * 10
+    </select>
+
+    <select id="getBookmarks" resultType="Board">
+        SELECT A.BNO,TITLE,CONTENT,TO_CHAR(REGDATE,'yyyy-MM-dd hh24:mi:ss') REGDATE
+        FROM TBL_BOARD A
+        JOIN TBL_BOOKMARK B
+        ON A.BNO=B.BNO
+        ORDER BY BNO DESC
+        LIMIT 10 OFFSET (#{pageNum} - 1) * 10
+    </select>
+
+    <select id="getTotal" resultType="int">
+        SELECT COUNT(*) FROM TBL_BOARD
+    </select>
+
+    <select id="getBookmarkTotal" resultType="int">
+        SELECT COUNT(*) FROM TBL_BOOKMARK
     </select>
 
     <select id="readBoardPost" resultType="Board">

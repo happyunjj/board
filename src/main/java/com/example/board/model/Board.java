@@ -9,14 +9,13 @@ import java.util.Date;
 @Setter
 @ToString
 public class Board {
-    private Long bno;
+    private long bno;
     private String title;
     private String content;
     private String regdate;
-    private String bookmark;
     private String moddate;
 
-    public Board(Long bno){
+    public Board(long bno){
         this.bno = bno;
     }
     public Board(String title, String content) {
