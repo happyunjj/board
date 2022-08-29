@@ -20,13 +20,13 @@ public class BoardServiceTest {
 
     @Test
     public void selectAll(){
-        List<Board> boardList = boardService.selectAll(3);
+        List<Board> boardList = boardService.selectAll(1);
         log.info("boardposts : {}", boardList);
     }
 
     @Test
     public void getBookmark(){
-        List<Board> bookmarkList = boardService.getBookmark(2);
+        List<Board> bookmarkList = boardService.getBookmarks();
         log.info("boardposts : {}", bookmarkList);
     }
 

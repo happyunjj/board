@@ -3,6 +3,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.board.repository.BoardMapper">
+    <select id="getBookmarks" resultType="Board">
+        SELECT A.BNO,TITLE,CONTENT,TO_CHAR(REGDATE,'yyyy-MM-dd hh24:mi:ss') REGDATE
+        FROM TBL_BOARD A
+        JOIN TBL_BOOKMARK B
+        ON A.BNO=B.BNO
+        ORDER BY ADDDATE DESC
+    </select>
+
     <select id="getList" resultType="Board">
         SELECT A.BNO,TITLE,CONTENT,TO_CHAR(REGDATE,'yyyy-MM-dd hh24:mi:ss') REGDATE,COUNT(B.BNO) BOOKMARK
         FROM TBL_BOARD A
@@ -13,21 +21,16 @@
         LIMIT 10 OFFSET (#{pageNum} - 1) * 10
     </select>
 
-    <select id="getBookmarks" resultType="Board">
+    <select id="getBookmark" resultType="Board">
         SELECT A.BNO,TITLE,CONTENT,TO_CHAR(REGDATE,'yyyy-MM-dd hh24:mi:ss') REGDATE
         FROM TBL_BOARD A
         JOIN TBL_BOOKMARK B
         ON A.BNO=B.BNO
-        ORDER BY BNO DESC
-        LIMIT 10 OFFSET (#{pageNum} - 1) * 10
+        WHERE A.BNO = #{BNO}
     </select>
 
     <select id="getTotal" resultType="int">
         SELECT COUNT(*) FROM TBL_BOARD
-    </select>
-
-    <select id="getBookmarkTotal" resultType="int">
-        SELECT COUNT(*) FROM TBL_BOOKMARK
     </select>
 
     <select id="readBoardPost" resultType="Board">
@@ -38,6 +41,11 @@
     <insert id="write">
         INSERT INTO TBL_BOARD (TITLE,CONTENT) VALUES (#{title},#{content})
     </insert>
+
+    <insert id="createBookmark">
+        INSERT INTO TBL_BOOKMARK (BNO) VALUES (#{bno})
+    </insert>
+
     
     <update id="update">
         UPDATE TBL_BOARD
@@ -48,6 +56,10 @@
     </update>
     <delete id="delete">
         DELETE TBL_BOARD
+        WHERE BNO = #{bno}
+    </delete>
+    <delete id="deleteBookmark">
+        DELETE TBL_BOOKMARK
         WHERE BNO = #{bno}
     </delete>
 </mapper>

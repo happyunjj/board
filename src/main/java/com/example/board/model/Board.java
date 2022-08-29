@@ -9,11 +9,11 @@ import java.util.Date;
 @Setter
 @ToString
 public class Board {
-    private long bno;
-    private String title;
-    private String content;
-    private String regdate;
-    private String moddate;
+    private long bno; // 글번호
+    private String title; // 제목
+    private String content; // 내용
+    private String regdate; // 게시물 등록일시
+    private String moddate; // 게시물 수정일시
 
     public Board(long bno){
         this.bno = bno;
